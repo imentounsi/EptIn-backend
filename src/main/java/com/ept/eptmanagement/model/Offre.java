@@ -14,9 +14,18 @@ public class Offre {
     private Long id;
     private String name;
     private String authority ;
+    private String field ;
+    private String email;
+    private String phoneNumber;
     private String country;
     private String city;
     private String type;
+    private String comment;
+    private String startDate;
+    private String endDate;
+
+
+
 
 
     @ManyToMany
@@ -27,14 +36,6 @@ public class Offre {
     private Set<Student> students = new HashSet<Student>();
 
 
-    public Offre(){}
-    public Offre(Long id,String name,String authority,String country,String city,String type){
-        this.id=id;
-        this.name=name;
-        this.authority=authority;
-        this.country=country;
-        this.city=city;
-        this.type=type;
-    }
+
 
 }

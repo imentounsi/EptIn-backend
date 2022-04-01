@@ -28,6 +28,11 @@ public class OffreController {
         List<Offre> offres = offreService.getOffreByType(type);
         return new ResponseEntity(offres, HttpStatus.OK);
     }
+    @GetMapping("/{field}")
+    public ResponseEntity<?> getOffreByField(@PathVariable String field) {
+        List<Offre> offres = offreService.getOffreByField(field);
+        return new ResponseEntity(offres, HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity addNewOffre(@RequestBody Offre offre) {

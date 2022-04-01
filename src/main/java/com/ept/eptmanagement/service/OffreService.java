@@ -3,26 +3,33 @@ package com.ept.eptmanagement.service;
 import com.ept.eptmanagement.model.Offre;
 import com.ept.eptmanagement.repository.OffreRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class OffreService {
     private final OffreRepository offreRepository;
+
     public void addNewOffre(Offre offre){
         offreRepository.save(offre);
     }
+
+
     public List<Offre> getOffers(){
        return offreRepository.findAll();
     }
+
     public List<Offre> getOffreByType(String type){
         return offreRepository.findByType(type);
     }
+    public List<Offre> getOffreByField(String field){
+        return offreRepository.findByField(field);
+    }
+
+
     @Transactional //pour eviter save//en cas de probleme rollback
     public void updateOffre(Offre offre){
         Offre ofr = offreRepository.findById(offre.getId())

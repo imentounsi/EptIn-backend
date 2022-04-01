@@ -19,16 +19,10 @@ public abstract class User {
     private String firstName;
     private String lastName;
     private String sexe;
+    //private String password;
+    //private string phoneNumber
+    //private String country
+    // private String city;
 
-    public User(){
-    }
-    public User(Long id,String email,String firstName,String lastName,String sexe) {
-        this.id=id;
-        this.email=email;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.sexe=sexe;
-
-    }
 
 }

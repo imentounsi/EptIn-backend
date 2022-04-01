@@ -8,9 +8,10 @@ import java.util.List;
 @Data
 @Entity
 public class Exstudent extends User {
-    private String option;
+    private String option;//education
     private String photo;
-    private String profession;
+    private String profession; //experience
+
     private String dateDeNaissance;
 
 
@@ -30,16 +31,5 @@ public class Exstudent extends User {
     @JoinColumn(name = "exstudentId")
     private List<Education> educations = new ArrayList<>();
 
-    public Exstudent() {
-    }
 
-    public Exstudent(Long id, String email, String firstName, String lastName,String sexe, String option, String photo, String profession,String dateDeNaissance) {
-        super(id, email, firstName, lastName,sexe);
-        this.option = option;
-        this.photo = photo;
-        this.profession = profession;
-        this.dateDeNaissance=dateDeNaissance;
-
-
-    }
 }

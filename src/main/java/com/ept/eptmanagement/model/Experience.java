@@ -10,13 +10,16 @@ import java.util.List;
 public class Experience {
     @Id
     private Long id;
-    private String title;
+    private String jobTitle;
     private String emloymentType;
     private String companyName;
     private String location;
     private String startDate;
     private String endDate;
     private String description;
+    private String city;
+    private String country;
+
 
 
     @ManyToMany

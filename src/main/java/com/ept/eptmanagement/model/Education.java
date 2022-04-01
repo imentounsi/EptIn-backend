@@ -4,8 +4,6 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 @Data
 @Entity
 public class Education {
@@ -13,8 +11,18 @@ public class Education {
     private Long id;
     private String degree;
     private String school;
-    private String startdate;
-    private String enddate;
+    private String option;
+    private String admissionDate;
+    private String graduationDate;
+    private String masterField;
+    private String pfeField;
+    private String phdField;
+    private String masterUniversity;
+    private String pfeUniversity;
+    private String phdUniversity;
+    private String comment;
+
+
 
 
 }
