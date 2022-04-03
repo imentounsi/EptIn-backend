@@ -19,10 +19,11 @@ public abstract class User {
     private String firstName;
     private String lastName;
     private String sexe;
-    //private String password;
-    //private string phoneNumber
-    //private String country
-    // private String city;
+    private String password;
+    private String phoneNumber;
+    private String country;
+    private String city;
+    private String field;
 
 
 }
