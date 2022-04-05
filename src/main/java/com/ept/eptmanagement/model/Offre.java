@@ -1,5 +1,6 @@
 package com.ept.eptmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Offre {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exstudent_id")
+    @JsonBackReference
     private Exstudent exstudent;
 
     @ManyToMany

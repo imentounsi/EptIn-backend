@@ -1,5 +1,6 @@
 package com.ept.eptmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Exstudent extends User {
     @OneToMany(mappedBy = "exstudent",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Offre> offres = new ArrayList<>();
 
 
