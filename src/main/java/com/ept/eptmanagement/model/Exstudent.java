@@ -1,35 +1,31 @@
 package com.ept.eptmanagement.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@SuperBuilder
 public class Exstudent extends User {
     private String option;//education
-    private String photo;
     private String profession; //experience
 
-    private String dateDeNaissance;
-
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "exstudentId")
+    @OneToMany(mappedBy = "exstudent",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     private List<Offre> offres = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "exstudentId")
-    private List<Experience> experiences = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "exstudentId")
-    private List<Certification> certifications = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "exstudentId")
-    private List<Education> educations = new ArrayList<>();
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.ept.eptmanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class Experience {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String jobTitle;
     private String emloymentType;
@@ -24,6 +26,11 @@ public class Experience {
 
     @ManyToMany
     private List<Skills> skills;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
 
 
 

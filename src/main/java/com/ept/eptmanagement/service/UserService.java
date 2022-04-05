@@ -1,20 +1,105 @@
 package com.ept.eptmanagement.service;
 
-import com.ept.eptmanagement.model.Offre;
-import com.ept.eptmanagement.model.User;
+import com.ept.eptmanagement.dto.RegistrationDto;
+import com.ept.eptmanagement.model.*;
 import com.ept.eptmanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-@Service
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.Collection;
+
 @RequiredArgsConstructor
-public class UserService {
+@Slf4j
+@Service
+public class UserService implements UserDetailsService {
+
     private final UserRepository userRepository;
-    public List<User> getUsers(){
-        return userRepository.findAll();
+    private final PasswordEncoder passwordEncoder;
+
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> {
+            log.error("User not found in the database");
+            throw new UsernameNotFoundException("User not found in the database");
+        });
+
+        log.info("user found in the database {}", email);
+
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
+        return new org.springframework.security.core.userdetails
+                .User(user.getEmail(), user.getPassword(), authorities);
     }
-    public List<User> getUserByField(String field){
-        return userRepository.findByField(field);
+
+    /**
+     * Register user
+     **/
+    public void registerNewUser(RegistrationDto registrationDto) {
+        boolean userExists = userRepository
+                .findByEmail(registrationDto.getEmail())
+                .isPresent();
+
+        if (userExists) {
+            throw new IllegalStateException("email already taken");
+        }
+
+        switch (registrationDto.getRole()) {
+            case "STUDENT":
+                Student student = Student.builder()
+                        .email(registrationDto.getEmail())
+                        .password(passwordEncoder.encode(registrationDto.getPassword()))
+                        .firstName(registrationDto.getFirstName())
+                        .lastName(registrationDto.getLastName())
+                        .role(Role.STUDENT).build();
+
+                userRepository.save(student);
+                break;
+
+            case "EX_STUDENT":
+                Exstudent exstudent = Exstudent.builder()
+                        .email(registrationDto.getEmail())
+                        .password(passwordEncoder.encode(registrationDto.getPassword()))
+                        .firstName(registrationDto.getFirstName())
+                        .lastName(registrationDto.getLastName())
+                        .role(Role.EX_STUDENT).build();
+                userRepository.save(exstudent);
+                break;
+            default:
+                throw new IllegalStateException("Role not found");
+        }
     }
+
+    @Transactional
+    public void updateUser(User user) {
+        User usr = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalStateException("offre not exist"));
+        usr.setAddress(user.getAddress());
+        usr.setCity(user.getCity());
+        usr.setCountry(user.getCountry());
+        usr.setId(user.getId());
+        usr.setBirthDate(user.getBirthDate());
+        usr.setPassword(user.getPassword());
+        usr.setFirstName(user.getFirstName());
+        usr.setLastName(user.getLastName());
+        usr.setSexe(user.getSexe());
+        usr.setPhone(user.getPhone());
+        usr.setPhone(user.getPhone());
+        usr.setPhoto(user.getPhoto());
+
+
+
+
+    }
+
+    /** Get user info **/
+
 }

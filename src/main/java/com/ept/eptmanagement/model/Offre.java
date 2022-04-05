@@ -3,6 +3,7 @@ package com.ept.eptmanagement.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Entity
 public class Offre {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String authority ;
@@ -21,12 +23,12 @@ public class Offre {
     private String city;
     private String type;
     private String comment;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
 
-
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exstudent_id")
+    private Exstudent exstudent;
 
     @ManyToMany
     @JoinTable(name = "Candidature",
@@ -34,8 +36,4 @@ public class Offre {
             inverseJoinColumns = { @JoinColumn(name = "offre_id")}
     )
     private Set<Student> students = new HashSet<Student>();
-
-
-
-
 }

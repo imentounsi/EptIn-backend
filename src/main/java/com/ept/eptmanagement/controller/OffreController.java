@@ -1,5 +1,6 @@
 package com.ept.eptmanagement.controller;
 
+import com.ept.eptmanagement.dto.OffreDto;
 import com.ept.eptmanagement.model.Offre;
 import com.ept.eptmanagement.service.OffreService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class OffreController {
         List<Offre> offres = offreService.getOffreByType(type);
         return new ResponseEntity(offres, HttpStatus.OK);
     }
+
     @GetMapping("/{field}")
     public ResponseEntity<?> getOffreByField(@PathVariable String field) {
         List<Offre> offres = offreService.getOffreByField(field);
@@ -35,12 +37,12 @@ public class OffreController {
     }
 
     @PostMapping
-    public ResponseEntity addNewOffre(@RequestBody Offre offre) {
+    public ResponseEntity addNewOffre(@RequestBody OffreDto offre) {
+        // todo get logged in user
         offreService.addNewOffre(offre);
         return new ResponseEntity<>(HttpStatus.OK);
-
-
     }
+
     @PutMapping
     public ResponseEntity updateOffre(@RequestBody Offre offre){
         offreService.updateOffre(offre);
