@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -86,18 +87,19 @@ public class UserService implements UserDetailsService {
         usr.setCity(user.getCity());
         usr.setCountry(user.getCountry());
         usr.setId(user.getId());
-        usr.setBirthDate(user.getBirthDate());
+        usr.setBirthday(user.getBirthday());
         usr.setPassword(user.getPassword());
         usr.setFirstName(user.getFirstName());
         usr.setLastName(user.getLastName());
-        usr.setSexe(user.getSexe());
-        usr.setPhone(user.getPhone());
-        usr.setPhone(user.getPhone());
-        usr.setPhoto(user.getPhoto());
+        usr.setGender(user.getGender());
+        usr.setPhoneNumber(user.getPhoneNumber());
 
 
 
 
+    }
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
     /** Get user info **/

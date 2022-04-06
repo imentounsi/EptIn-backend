@@ -34,15 +34,15 @@ public abstract class User {
     @Column(name = "last_name")
     private String lastName;
 
-    private String sexe;
+    private String gender;
 
     @Column(name = "birth_date")
-    private String birthDate;
+    private String birthday;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private String phone;
+    private String phoneNumber;
 
     private String country;
 
@@ -50,7 +50,6 @@ public abstract class User {
 
     private String address;
 
-    private String photo;
 
 
     @OneToMany(mappedBy = "user",

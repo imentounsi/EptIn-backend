@@ -22,6 +22,6 @@ public class OffreDto {
     private String city;
     private String type;
     private String comment;
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
 }

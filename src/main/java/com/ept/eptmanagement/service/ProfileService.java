@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +71,7 @@ public class ProfileService {
 
         }
         return null;
-    }
+          }
 
     public List<Experience> getExperienceByUser() {
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -105,7 +106,6 @@ public class ProfileService {
         Education edc = educationRepository.findById(education.getId())
                 .orElseThrow(() -> new IllegalStateException("offre not exist"));
         edc.setId(education.getId());
-        edc.setSchool(education.getSchool());
         edc.setOption(education.getOption());
         edc.setAdmissionDate(education.getAdmissionDate());
         edc.setGraduationDate(education.getGraduationDate());
@@ -126,6 +126,8 @@ public class ProfileService {
 
 
 
+    public List<Education> getEducationByUser(User user) {return educationRepository.findByUser(user);
+    }
 }
 
 

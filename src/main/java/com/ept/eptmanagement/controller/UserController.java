@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("users")
 @Controller
@@ -51,7 +53,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userRepository.findById(id).orElse(null);
         return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -61,5 +63,10 @@ public class UserController {
     public ResponseEntity updateUser(@RequestBody User user){
         userService.updateUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping//("/test") path
+    public ResponseEntity<?> getUsers() {
+        List<User> users = userService.getUsers();
+        return new ResponseEntity(users, HttpStatus.OK);
     }
 }

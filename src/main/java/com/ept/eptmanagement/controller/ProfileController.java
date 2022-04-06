@@ -1,8 +1,7 @@
 package com.ept.eptmanagement.controller;
 
-import com.ept.eptmanagement.dto.OffreDto;
 import com.ept.eptmanagement.model.*;
-import com.ept.eptmanagement.service.ExstudentService;
+import com.ept.eptmanagement.repository.UserRepository;
 import com.ept.eptmanagement.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("profile")
@@ -18,6 +18,8 @@ import java.util.List;
 
 public class ProfileController {
     private final ProfileService profileService;
+    private final UserRepository userRepository;
+
 
     @PostMapping("experience")
     public ResponseEntity addNewExperience(@RequestBody Experience experience) {
@@ -59,5 +61,12 @@ public class ProfileController {
     public ResponseEntity updateEducation(@RequestBody Education education){
         profileService.updateEducation(education);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEducationByUser(@PathVariable Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        List<Education> education = profileService.getEducationByUser(user);
+        return new ResponseEntity(education, HttpStatus.OK);
     }
 }
