@@ -6,6 +6,7 @@ import com.ept.eptmanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -81,18 +82,26 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void updateUser(User user) {
-        User usr = userRepository.findById(user.getId())
-                .orElseThrow(() -> new IllegalStateException("offre not exist"));
-        usr.setAddress(user.getAddress());
-        usr.setCity(user.getCity());
-        usr.setCountry(user.getCountry());
-        usr.setId(user.getId());
-        usr.setBirthday(user.getBirthday());
-        usr.setPassword(user.getPassword());
-        usr.setFirstName(user.getFirstName());
-        usr.setLastName(user.getLastName());
-        usr.setGender(user.getGender());
-        usr.setPhoneNumber(user.getPhoneNumber());
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (email != null) {
+            User usr = userRepository.findByEmail(email).orElseThrow(() -> {
+                throw new IllegalStateException("User not found");
+            });
+            usr.setAddress(user.getAddress());
+            usr.setCity(user.getCity());
+            usr.setCountry(user.getCountry());
+            usr.setBirthday(user.getBirthday());
+            usr.setPassword(user.getPassword());
+            usr.setFirstName(user.getFirstName());
+            usr.setLastName(user.getLastName());
+            usr.setGender(user.getGender());
+            usr.setPhoneNumber(user.getPhoneNumber());
+        }
+//        switch (usr.getRole()){
+//
+//        }
+
 
 
 

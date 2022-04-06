@@ -24,8 +24,8 @@ public class Experience {
 
 
 
-    @ManyToMany
-    private List<Skills> skills;
+//    @ManyToMany
+//    private List<Skills> skills;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

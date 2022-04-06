@@ -1,6 +1,7 @@
 package com.ept.eptmanagement.controller;
 
 import com.ept.eptmanagement.model.*;
+import com.ept.eptmanagement.repository.ExstudentRepository;
 import com.ept.eptmanagement.repository.UserRepository;
 import com.ept.eptmanagement.service.ProfileService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("profile")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:4200")
+
 
 public class ProfileController {
     private final ProfileService profileService;
@@ -63,10 +66,25 @@ public class ProfileController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getEducationByUser(@PathVariable Long id) {
+    @GetMapping("/education/{id}")
+    public ResponseEntity<?> getEducationByUserId(@PathVariable Long id) {
         User user = userRepository.findById(id).orElse(null);
         List<Education> education = profileService.getEducationByUser(user);
         return new ResponseEntity(education, HttpStatus.OK);
     }
+
+    @GetMapping("/experience/{id}")
+    public ResponseEntity<?> getExperienceByUserId(@PathVariable Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        List<Experience> experience = profileService.getExperienceByUser(user);
+        return new ResponseEntity(experience, HttpStatus.OK);
+    }
+
+    @GetMapping("/certification/{id}")
+    public ResponseEntity<?> getCertificationByUserId(@PathVariable Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        List<Certification> certification = profileService.getCertificationByUser(user);
+        return new ResponseEntity(certification, HttpStatus.OK);
+    }
+
 }

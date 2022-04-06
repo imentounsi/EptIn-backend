@@ -12,4 +12,6 @@
 //@ToString
 //@Builder
 //public class CandidatureDto {
+//    private Long offreId;
+//    private Long userId;
 //}

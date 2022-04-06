@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -103,19 +102,25 @@ public class ProfileService {
 
     @Transactional //pour eviter save//en cas de probleme rollback
     public void updateEducation(Education education) {
-        Education edc = educationRepository.findById(education.getId())
-                .orElseThrow(() -> new IllegalStateException("offre not exist"));
-        edc.setId(education.getId());
-        edc.setOption(education.getOption());
-        edc.setAdmissionDate(education.getAdmissionDate());
-        edc.setGraduationDate(education.getGraduationDate());
-        edc.setMasterField(education.getMasterField());
-        edc.setPfeField(education.getPfeField());
-        edc.setPhdField(education.getPhdField());
-        edc.setMasterUniversity(education.getMasterUniversity());
-        edc.setPfeUniversity(education.getPfeUniversity());
-        edc.setPhdUniversity(education.getPhdUniversity());
-        edc.setComment(education.getComment());
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (email != null) {
+            User usr = userRepository.findByEmail(email).orElseThrow(() -> {
+                throw new IllegalStateException("User not found");
+            });
+            Education edc = educationRepository.findById(education.getId())
+                    .orElseThrow(() -> new IllegalStateException("education not exist"));
+            edc.setOption(education.getOption());
+            edc.setAdmissionDate(education.getAdmissionDate());
+            edc.setGraduationDate(education.getGraduationDate());
+            edc.setMasterField(education.getMasterField());
+            edc.setPfeField(education.getPfeField());
+            edc.setPhdField(education.getPhdField());
+            edc.setMasterUniversity(education.getMasterUniversity());
+            edc.setPfeUniversity(education.getPfeUniversity());
+            edc.setPhdUniversity(education.getPhdUniversity());
+            edc.setComment(education.getComment());
+        }
 
 
 
@@ -127,6 +132,10 @@ public class ProfileService {
 
 
     public List<Education> getEducationByUser(User user) {return educationRepository.findByUser(user);
+    }
+    public List<Experience> getExperienceByUser(User user) {return experienceRepository.findByUser(user);
+    }
+    public List<Certification> getCertificationByUser(User user) {return certificationRepository.findByUser(user);
     }
 }
 

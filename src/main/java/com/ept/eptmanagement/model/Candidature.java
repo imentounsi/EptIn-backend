@@ -1,13 +1,15 @@
 package com.ept.eptmanagement.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
-class Candidature {
+public class Candidature {
 
     @EmbeddedId
     private OffreStudentId id = new OffreStudentId();
@@ -17,10 +19,10 @@ class Candidature {
     private Offre offre;
 
     @ManyToOne
-    @MapsId("studentId")
-    private Student student;
+    @MapsId("userId")
+    private User user;
 
-    private String date;
+    private Date date;
 }
 
 

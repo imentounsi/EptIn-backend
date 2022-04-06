@@ -19,6 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("users")
 @Controller
+@CrossOrigin("http://localhost:4200")
+
 public class UserController {
 
     private final UserService userService;

@@ -8,7 +8,7 @@ import java.util.Objects;
     public class OffreStudentId  implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long offreId;
-    private Long studentId;
+    private Long userId;
     public OffreStudentId() {
 
     }
@@ -16,7 +16,7 @@ import java.util.Objects;
     public OffreStudentId(Long offreId, Long date){
         super();
         this.offreId =offreId ;
-        this.studentId=studentId;
+        this.userId=userId;
     }
     public Long getOffreId() {
         return offreId;
@@ -26,12 +26,12 @@ import java.util.Objects;
         this.offreId = offreId;
     }
 
-    public Long getStudentId() {
-        return studentId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
+    public void setStudentId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -41,7 +41,7 @@ import java.util.Objects;
         result = prime * result
                 + ((offreId == null) ? 0 : offreId.hashCode());
         result = prime * result
-                + ((studentId == null) ? 0 : studentId.hashCode());
+                + ((userId == null) ? 0 : userId.hashCode());
         return result;
     }
 
@@ -54,7 +54,7 @@ import java.util.Objects;
         if (getClass() != obj.getClass())
             return false;
         OffreStudentId other = (OffreStudentId) obj;
-        return Objects.equals(getOffreId(), other.getOffreId()) && Objects.equals(getStudentId(), other.getStudentId());
+        return Objects.equals(getOffreId(), other.getOffreId()) && Objects.equals(getUserId(), other.getUserId());
     }
 }
 

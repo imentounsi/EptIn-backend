@@ -10,7 +10,9 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @SuperBuilder
-public abstract class User {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -69,5 +71,7 @@ public abstract class User {
             fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Certification> certification = new ArrayList<>();
+
+
 
 }
